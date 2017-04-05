@@ -115,9 +115,14 @@
                 "rate":rate[0],
                 "image": movie.Poster
             }
-        }).filter( function(movie) {
-            return term=='' || (movie.title && movie.title.toLowerCase().indexOf(term) >= 0);
+        })
+        .filter( function(movie) {
+            return movie.title != null;
+        })
+        .filter( function(movie) {
+            return term=='' || movie.title.toLowerCase().indexOf(term) >= 0;
         });
+
 
 
         // Add movies into the list
