@@ -100,8 +100,8 @@
 
             var rate = [0];
 
-            if( movie.Ratings ) {
-                rate = movie.Ratings.filter(function(rate){
+            if( movie.info.Ratings ) {
+                rate = movie.info.Ratings.filter(function(rate){
                     return rate.Source == "Internet Movie Database"
                 }).map( function(rate) { return rate.Value });
             }
@@ -111,9 +111,9 @@
             }
 
             return {
-                "title":movie.Title,
+                "title":movie.info.Title,
                 "rate":rate[0],
-                "image": movie.Poster
+                "image": movie.info.Poster
             }
         })
         .filter( function(movie) {

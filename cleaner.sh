@@ -8,9 +8,9 @@ echo '[' >> out.json
 
 while read -r line
 do
-	echo '{\"movie\": \"'$line'\", \"info\": '
+	echo '{"movie": "'$line'", "info": ' >> out.json
 	curl "http://www.omdbapi.com/?t="$line >> out.json
-	echo ',' >>  out.json
+	echo '},' >>  out.json
 	
 done < out.txt
 
