@@ -7,14 +7,16 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="img/azam.ico">
 
     <title>Azam</title>
     <link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
     <script src="https://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style media="screen">
+    body {
+        background: #eeeeee;
+    }
     .movie {
         margin: 10px;
         background: #f7f7f7;
@@ -39,6 +41,25 @@
         padding-right: 32px;
     }
 
+    .movie-genre {
+        display: block;
+        margin: 0 10px;
+        left: 10px;
+        float: right;
+        background: #d8d8d8;
+        padding: 2px 2px;
+        border-radius: 4px;
+    }
+
+    .movie-plot {
+        display: block;
+        margin-top: 60px;
+        line-height: 30px;
+        height: 140px;
+        margin-right: 20px;
+        overflow: scroll;
+    }
+
     .clearfix::after {
         content: " ";
         display: block;
@@ -52,12 +73,31 @@
         padding: 0 10px;
     }
 
+    a {
+        cursor: pointer;
+    }
+
     </style>
 </head>
 
 <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <a href="">
+            <img src="/img/wish.png" width="36">
+        </a>
+      </div>
+    </nav>
 
     <div class="container">
+
+         <div class="row">
+            <div class="col-lg-12">
+                <div style="text-align: center; margin-bottom: 50px">
+                    <img src="/img/azam.png" width="300">
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-12">
@@ -112,14 +152,19 @@
             return {
                 "title":movie.info.Title,
                 "rate":rate[0],
-                "image": movie.info.Poster
+                "image": movie.info.Poster,
+                "genre": movie.info.Genre,
+                "plot": movie.info.Plot,
             }
         })
         .filter( function(movie) {
             return movie.title != null;
         })
         .filter( function(movie) {
-            return term=='' || movie.title.toLowerCase().indexOf(term) >= 0;
+            return term=='' || 
+                    movie.title.toLowerCase().indexOf(term) >= 0 ||
+                    movie.plot.toLowerCase().indexOf(term) >= 0 || 
+                    movie.genre.toLowerCase().indexOf(term) >= 0;
         });
 
 
@@ -133,7 +178,16 @@
             var elmImage = $('<img>').addClass('movie-image').attr('src',item.image);
             var elmTitle = $('<span>').addClass('movie-title').text(item.title);
             var elmScore = $('<span>').addClass('movie-rate').text(item.rate);
-            var elm = $('<div>').addClass('movie clearfix').append(elmImage).append(elmTitle).append(elmScore);
+            var elmGenre = $('<span>').addClass('movie-genre').text(item.genre);
+            var elmPlot = $('<span>').addClass('movie-plot').text(item.plot);
+
+            var elm = $('<div>').addClass('movie clearfix')
+                                .append(elmImage)
+                                .append(elmTitle)
+                                .append(elmScore)
+                                .append(elmGenre)
+                                .append(elmPlot);
+
             $('#list').append( elm );
 
         });
