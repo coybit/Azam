@@ -1,200 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="https://github.com/coybit/Azam/raw/master/img/azam.ico">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="https://github.com/coybit/Azam/raw/master/img/azam.ico">
 
-    <title>Azam</title>
-    <link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <style media="screen">
-    body {
-        background: #eeeeee;
-    }
-    .movie {
-        margin: 10px;
-        background: #f7f7f7;
-        padding: 16px;
-        border-radius: 4px;
-        box-shadow: 1px 1px 1px #ccc;
-    }
+  <title>Azam</title>
+  <link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/1.0.0/lunr.min.js" charset="utf-8"></script>
 
-    .movie-title {
-        font-size: 28px;
-        float: left;
-    }
+  <style media="screen">
+  body {
+    background: #eeeeee;
+  }
+  .movie {
+    margin: 10px;
+    background: #f7f7f7;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px #ccc;
+  }
 
-    .movie-rate {
-        font-size: 20px;
-        float: right;
-    }
+  .movie-title {
+    font-size: 28px;
+    float: left;
+  }
 
-    .movie-image {
-        height: 200px;
-        float: left;
-        padding-right: 32px;
-    }
+  .movie-rate {
+    font-size: 20px;
+    float: right;
+  }
 
-    .movie-genre {
-        display: block;
-        margin: 0 10px;
-        left: 10px;
-        float: right;
-        background: #d8d8d8;
-        padding: 2px 2px;
-        border-radius: 4px;
-    }
+  .movie-image {
+    height: 200px;
+    float: left;
+    padding-right: 32px;
+  }
 
-    .movie-plot {
-        display: block;
-        margin-top: 60px;
-        line-height: 30px;
-        height: 140px;
-        margin-right: 20px;
-        overflow: scroll;
-    }
+  .movie-genre {
+    display: block;
+    margin: 0 10px;
+    left: 10px;
+    float: right;
+    background: #d8d8d8;
+    padding: 2px 2px;
+    border-radius: 4px;
+  }
 
-    .clearfix::after {
-        content: " ";
-        display: block;
-        height: 0;
-        clear: both;
-    }
+  .movie-plot {
+    display: block;
+    margin-top: 60px;
+    line-height: 30px;
+    height: 140px;
+    margin-right: 20px;
+    overflow: scroll;
+  }
 
-    .search-box {
-        width: 100%;
-        height: 40px;
-        padding: 0 10px;
-    }
+  .clearfix::after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+  }
 
-    a {
-        cursor: pointer;
-    }
+  .search-box {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+  }
 
-    </style>
+  a {
+    cursor: pointer;
+  }
+
+  </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <a href="">
-            <img src="https://github.com/coybit/Azam/raw/master/img/wish.png" width="36">
-        </a>
-      </div>
-    </nav>
-
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
+      <a href="">
+        <img src="https://github.com/coybit/Azam/raw/master/img/wish.png" width="36">
+      </a>
+    </div>
+  </nav>
 
-         <div class="row">
-            <div class="col-lg-12">
-                <div style="text-align: center; margin-bottom: 50px">
-                    <img src="https://github.com/coybit/Azam/raw/master/img/azam.png" width="300">
-                </div>
-            </div>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div style="text-align: center; margin-bottom: 50px">
+          <img src="https://github.com/coybit/Azam/raw/master/img/azam.png" width="100">
         </div>
+      </div>
+    </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <input type="text" placeholder="Search in title, plot and genre ..." class="search-box"/>
-            </div>
-        </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <input type="text" placeholder="Search in title, plot and genre ..." class="search-box"/>
+      </div>
+    </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div id="list"></div>
-            </div>
-        </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="list"></div>
+      </div>
+    </div>
 
-    </div> <!-- /container -->
+  </div> <!-- /container -->
 
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-    var movies = [];
+  var movies = [];
 
-    $.get( 'out.json', function(res) {
+  var idx = lunr(function () {
+    this.field('title', { boost: 10 })
+    this.field('plot')
+    this.field('genre')
+    this.field('actors')
+    this.field('director')
+    this.field('year')
+  })
 
-        movies = res;
-        load('');
+  $.get( 'out.json', function(res) {
 
-    })
+    movies = prepare(res);
+    search('', movies);
 
-    ///////// Event Handlers
-    $('.search-box').on('keyup', function() {
-        var term = $('.search-box').val();
-        load(term.toLowerCase());
+  })
+
+  ///////// Event Handlers
+  $('.search-box').on('keyup', function() {
+    var term = $('.search-box').val().toLowerCase();
+    search(term, movies);
+  });
+
+
+  ///////// Utilities
+
+  function prepare(rawList) {
+
+    var list = rawList.map(function(movie){
+
+      // Extract Rate
+      var rate = [0];
+      if( movie.info.Ratings ) {
+        rate = movie.info.Ratings.filter(function(rate){
+          return rate.Source == "Internet Movie Database"
+        }).map( function(rate) { return rate.Value });
+      }
+
+      if( rate.length == 0 ) {
+        rate = [0];
+      }
+
+      // Map
+      return {
+        "title": movie.info.Title,
+        "rate": rate[0],
+        "image": movie.info.Poster,
+        "genre": movie.info.Genre,
+        "plot": movie.info.Plot,
+        "director": movie.info.Director,
+        "actors": movie.info.Actors,
+        "year": movie.info.Year,
+      }
+    }).filter( function(movie) {
+      return movie.title != null;
     });
 
+    list.forEach( function(item,index) {
 
-    ///////// Utilities
+      var doc = {
+        "title": item.title,
+        "plot": item.plot,
+        "director": item.director,
+        "genre": item.genre,
+        "actors": item.actors,
+        "year": item.year,
+        "id": index
+      }
+      idx.add(doc);
 
-    function load(term) {
+    });
 
-        list = movies.map(function(movie){
+    return list;
+  }
 
-            var rate = [0];
+  function search(term,movies) {
 
-            if( movie.info.Ratings ) {
-                rate = movie.info.Ratings.filter(function(rate){
-                    return rate.Source == "Internet Movie Database"
-                }).map( function(rate) { return rate.Value });
-            }
+    $('#list').html('');
 
-            if( rate.length == 0 ) {
-                rate = [0];
-            }
+    var results = idx.search(term);
 
-            return {
-                "title":movie.info.Title,
-                "rate":rate[0],
-                "image": movie.info.Poster,
-                "genre": movie.info.Genre,
-                "plot": movie.info.Plot,
-            }
-        })
-        .filter( function(movie) {
-            return movie.title != null;
-        })
-        .filter( function(movie) {
-            return term=='' || 
-                    movie.title.toLowerCase().indexOf(term) >= 0 ||
-                    movie.plot.toLowerCase().indexOf(term) >= 0 || 
-                    movie.genre.toLowerCase().indexOf(term) >= 0;
-        });
+    results.forEach( function(result) {
 
+      var movie = movies[result.ref];
 
+      var elmImage = $('<img>').addClass('movie-image').attr('src',movie.image);
+      var elmTitle = $('<span>').addClass('movie-title').text(movie.title);
+      var elmScore = $('<span>').addClass('movie-rate').text(movie.rate);
+      var elmGenre = $('<span>').addClass('movie-genre').text(movie.genre);
+      var elmPlot = $('<span>').addClass('movie-plot').text(movie.plot);
 
-        // Add movies into the list
+      var elm = $('<div>').addClass('movie clearfix')
+      .append(elmImage)
+      .append(elmTitle)
+      .append(elmScore)
+      .append(elmGenre)
+      .append(elmPlot);
 
-        $('#list').html('');
+      $('#list').append( elm );
 
-        list.forEach( function(item) {
+    });
 
-            var elmImage = $('<img>').addClass('movie-image').attr('src',item.image);
-            var elmTitle = $('<span>').addClass('movie-title').text(item.title);
-            var elmScore = $('<span>').addClass('movie-rate').text(item.rate);
-            var elmGenre = $('<span>').addClass('movie-genre').text(item.genre);
-            var elmPlot = $('<span>').addClass('movie-plot').text(item.plot);
+  }
 
-            var elm = $('<div>').addClass('movie clearfix')
-                                .append(elmImage)
-                                .append(elmTitle)
-                                .append(elmScore)
-                                .append(elmGenre)
-                                .append(elmPlot);
-
-            $('#list').append( elm );
-
-        });
-
-    }
-
-    </script>
+  </script>
 
 </body>
 </html>
