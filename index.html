@@ -116,13 +116,14 @@
     <div class="row">
       <div class="col-lg-12">
         <div style="text-align: center;">
-          <img src="https://github.com/coybit/Azam/raw/master/img/azam.png" width="100">
+          <img src="https://github.com/coybit/Azam/raw/master/img/azam.png" height="100">
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-11">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10">
         <input type="text" placeholder="Search in title, plot and genre ..." class="search-box"/>
       </div>
       <div class="col-lg-1">
@@ -153,10 +154,14 @@
     this.field('year')
   })
 
-  $.get( 'out.json', function(res) {
+  $(function() {
 
-    movies = prepare(res);
-    searchDidRequest();
+    $.get( 'out.json', function(res) {
+
+      movies = prepare(res);
+      searchDidRequest();
+
+    })
 
   })
 
