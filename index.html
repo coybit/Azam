@@ -81,11 +81,10 @@
   }
 
   .sort-label {
-    color: #9a9a9a;
+    color: #aaa;
     cursor: pointer;
-    font-size: 14px;
-    background: #eee;
-    padding: 10px 8px;
+    font-size: 12px;
+    padding: 10px 0;
     border-radius: 4px;
     margin: 30px 0;
     height: 40px;
@@ -93,8 +92,7 @@
   }
 
   .sort-label.active {
-    color: white;
-    background: #5cb85c;
+    color: #000;
   }
 
   a {
@@ -124,12 +122,12 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-10">
+      <div class="col-lg-11">
         <input type="text" placeholder="Search in title, plot and genre ..." class="search-box"/>
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-1">
         <div class="sort-label">
-          <img src="https://github.com/coybit/Azam/raw/master/img/sort.png" width="16"> Score
+          ↓ Score
         </div>
       </div>
     </div>
@@ -158,21 +156,30 @@
   $.get( 'out.json', function(res) {
 
     movies = prepare(res);
-    search('', movies);
+    searchDidRequest();
 
   })
 
   ///////// Event Handlers
   $('.search-box').on('keyup', function() {
-    var term = $('.search-box').val().toLowerCase();
-    search(term, movies);
+    searchDidRequest();
   });
 
   $('.sort-label').click( function() {
     $('.sort-label').toggleClass('active');
+
+    searchDidRequest();
+
   });
 
   ///////// Utilities
+
+  function searchDidRequest() {
+    var term = $('.search-box').val().toLowerCase();
+    var sort = $('.sort-label').hasClass('active');
+    console.log(sort);
+    search(term, sort, movies);
+  }
 
   function prepare(rawList) {
 
@@ -200,6 +207,7 @@
         "director": movie.info.Director,
         "actors": movie.info.Actors,
         "year": movie.info.Year,
+        "id": movie.info.imdbID
       }
     }).filter( function(movie) {
       return movie.title != null;
@@ -214,7 +222,7 @@
         "genre": item.genre,
         "actors": item.actors,
         "year": item.year,
-        "id": index
+        "id": item.id
       }
       idx.add(doc);
 
@@ -223,7 +231,7 @@
     return list;
   }
 
-  function search(term,movies) {
+  function search(term,sort,movies) {
 
     $('#list').html('').hide();
 
@@ -234,8 +242,29 @@
     }
     else {
       results = idx.search(term).map( function(result) {
-        return movies[result.ref];
+
+        var movie = movies.filter( function(movie){
+          return result.ref == movie.id;
+        })[0];
+
+        return movie;
+
       });
+    }
+
+    if( sort ) {
+      results.sort( function(a,b) {
+        var rateA = parseFloat( a.rate );
+        var rateB = parseFloat( b.rate );
+        return rateB - rateA;
+      })
+    }
+    else {
+      results.sort( function(a,b) {
+        var titleA = a.title.toLowerCase();
+        var titleB = b.title.toLowerCase();
+        return titleA.localeCompare(titleB);
+      })
     }
 
     results.forEach( function(movie) {
