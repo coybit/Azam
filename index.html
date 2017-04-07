@@ -80,6 +80,23 @@
     outline: none;
   }
 
+  .sort-label {
+    color: #9a9a9a;
+    cursor: pointer;
+    font-size: 14px;
+    background: #eee;
+    padding: 10px 8px;
+    border-radius: 4px;
+    margin: 30px 0;
+    height: 40px;
+    text-align: center;
+  }
+
+  .sort-label.active {
+    color: white;
+    background: #5cb85c;
+  }
+
   a {
     cursor: pointer;
   }
@@ -107,8 +124,13 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-10">
         <input type="text" placeholder="Search in title, plot and genre ..." class="search-box"/>
+      </div>
+      <div class="col-lg-2">
+        <div class="sort-label">
+          <img src="https://github.com/coybit/Azam/raw/master/img/sort.png" width="16"> Score
+        </div>
       </div>
     </div>
 
@@ -146,6 +168,9 @@
     search(term, movies);
   });
 
+  $('.sort-label').click( function() {
+    $('.sort-label').toggleClass('active');
+  });
 
   ///////// Utilities
 
