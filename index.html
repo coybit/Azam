@@ -104,6 +104,22 @@
     cursor: pointer;
   }
 
+  a, a:hover, a:visited {
+    color: #999;
+    text-decoration: none;
+  }
+
+  a span {
+    display: none;
+    color: #f0c84e;
+    font-weight: 100;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  a:hover span {
+    display: inline-block;
+  }
+
   /* Loader */
   .loader,
   .loader:before,
@@ -172,7 +188,9 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <a href="mailto:coybit@gmail.com?Subject=Azam" target="_top">
-        <img src="https://github.com/coybit/Azam/raw/master/img/wish.png" width="36">
+        <img src="https://github.com/coybit/Azam/raw/master/img/wish.png" width="36"><span>
+          Make a wish ...
+        </span>
       </a>
     </div>
   </nav>
@@ -250,7 +268,9 @@
     var term = $('.search-box').val().toLowerCase();
     var sort = $('.sort-label').hasClass('active');
 
-    search(term, sort, movies);
+    setTimeout( function() {
+      search(term, sort, movies)
+    }, 0);
   }
 
   function prepare(rawList) {
