@@ -14,6 +14,7 @@
   <script src="https://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/1.0.0/lunr.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/async/2.3.0/async.js" charset="utf-8"></script>
 
   <style media="screen">
   body {
@@ -93,6 +94,7 @@
 
   .sort-label.active {
     color: #000;
+    font-weight: 800;
   }
 
   a {
@@ -172,9 +174,7 @@
 
   $('.sort-label').click( function() {
     $('.sort-label').toggleClass('active');
-
     searchDidRequest();
-
   });
 
   ///////// Utilities
@@ -182,7 +182,7 @@
   function searchDidRequest() {
     var term = $('.search-box').val().toLowerCase();
     var sort = $('.sort-label').hasClass('active');
-    console.log(sort);
+
     search(term, sort, movies);
   }
 
