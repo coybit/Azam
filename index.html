@@ -22,6 +22,7 @@
   }
 
   .movie {
+    cursor: pointer;
     margin: 10px 0;
     background: #f7f7f7;
     padding: 16px;
@@ -117,6 +118,22 @@
   .stat {
       color: #d4d4d4;
       text-align: center;
+  }
+
+  .movie-more {
+    margin: 20px 0;
+    border-top: 1px solid #d4d4d4;
+    padding: 10px 0;
+    display: none;
+  }
+
+  .movie-more a {
+    display: inline-block;
+    float: right;
+    background: #822d2d;
+    color: #efefef;
+    padding: 5px 10px;
+    border-radius: 4px;
   }
 
   a {
@@ -299,6 +316,10 @@
 
   ///////// Utilities
 
+  function movieIsClicked() {
+      $(this).find('.movie-more').toggle();
+  }
+
   function searchDidRequest() {
     var term = $('.search-box').val().toLowerCase();
     var sort = $('.sort-label').hasClass('active');
@@ -399,18 +420,24 @@
 
     results.forEach( function(movie) {
 
+      var subtitleLink = 'https://subscene.com/subtitles/title?q=' + movie.title
+
       var elmImage = $('<img>').addClass('movie-image').attr('src',movie.image);
       var elmTitle = $('<span>').addClass('movie-title').text(movie.title);
       var elmScore = $('<span>').addClass('movie-rate').text(movie.rate);
       var elmGenre = $('<span>').addClass('movie-genre').text(movie.genre);
       var elmPlot = $('<span>').addClass('movie-plot').text(movie.plot);
+      var elmMore = $('<div>').addClass('movie-more').html('Director: ' + movie.director + '<br/>Actors: ' + movie.actors + '</br><a href=\"' + subtitleLink + '\">Subtitle</a>');
 
       var elm = $('<div>').addClass('movie clearfix')
       .append(elmImage)
       .append(elmTitle)
       .append(elmScore)
       .append(elmGenre)
-      .append(elmPlot);
+      .append(elmPlot)
+      .append(elmMore);
+
+      elm.click(movieIsClicked);
 
       $('#list').append( elm );
 
