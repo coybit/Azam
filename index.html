@@ -114,6 +114,11 @@
     font-weight: 800;
   }
 
+  .stat {
+      color: #d4d4d4;
+      text-align: center;
+  }
+
   a {
     cursor: pointer;
   }
@@ -228,6 +233,12 @@
         <div class="sort-label">
           ↓ Score
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="stat"></div>
       </div>
     </div>
 
@@ -408,6 +419,16 @@
     $('.loader').hide();
     $('#list').show();
 
+    var n = results.length;
+    if( n == 0 ) {
+        $('.stat').text( 'no result' );
+    }
+    else if( n == 1) {
+        $('.stat').text( 'just one movie is found' );
+    }
+    else {
+        $('.stat').text( results.length + ' movies are found' );
+    }
   }
 
   </script>
