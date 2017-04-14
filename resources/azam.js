@@ -32,11 +32,16 @@ $(function() {
 
     $('.search-box').focus().val(query);
 
-    $.get( 'out.json', function(res) {
+    $.get( 'out.json', function(resMovies) {
 
-        movies = prepare(res);
-        searchDidRequest();
+        
+         $.get( 'similars.json', function(resSimilars) {
 
+            movies = prepare(resMovies);
+            prepareSimilarMovieTags(resSimilars);
+
+            searchDidRequest();
+         });
 
         // movies.forEach( function(movie, idx) {
 
@@ -49,12 +54,6 @@ $(function() {
         // });
     })
 
-
-     $.get( 'similars.json', function(res) {
-        similars = res;
-
-        addSimilarMovieTags();
-     });
 
     ///////// Event Handlers
     $('.search-box').on('keyup', function() {
@@ -74,30 +73,31 @@ function movieIsClicked() {
     $(this).find('.movie-more').toggle();
 }
 
-function addSimilarMovieTags() {
+function prepareSimilarMovieTags(rawList) {
 
-    $('.movie').each( function(idx,elm) {
+    movies.forEach( function(movie) {
 
-            var elmMovie = $(elm);
-            var mid = elmMovie.attr('mid');
+        var similarMovies = rawList.filter( function(m) {
+            return m.id == movie.id;
+        }).flatMap( function(m) {
+            return m.similar.results;
+        }).map( function(similar) {
+            return similar.title;
+        }).map( function(similar){
 
-            var elmSimilarMovies = similars.filter( function(m) {
-                return mid == m.id;
-            }).flatMap( function(m) {
-                return m.similar.results;
-            }).forEach( function(m) {
-
-                //var elmPoster = $('<img>').attr('src', 'https://image.tmdb.org/t/p/w100' + m.poster_path);
-                var elmTitle = $('<div>').text(m.title);
-
-                var elmSimilarMovie = $('<div>').addClass('movie-similar')
-                //                                .append(elmPoster)
-                                                .append(elmTitle);
-
-                elmMovie.find('.movie-similars').append(elmSimilarMovie);
+            var movie = movies.find( function(movie) {
+                return movie.title.toLowerCase() == similar.toLowerCase();
             });
 
-        });
+            return  { 
+                'title': similar,
+                'mid': (movie == null) ? null : movie.id
+            }
+        })
+
+        movie['similars'] = similarMovies || [];
+
+    });
 }
 
 function searchDidRequest() {
@@ -214,6 +214,24 @@ function search(term,sort,movies) {
             '<a target="_blank" href=\"http://www.imdb.com/title/' + movie.id + '/\">Open IMDB</a> ' +
             '<a target="_blank" href=\"' + subtitleLink + '\">Find Subtitle</a>');
 
+        // Similar Movies
+        movie.similars.forEach( function(similar) {
+            
+            var elmSimilarMovie = $('<div>').addClass('movie-similar');
+            var elmTitle = $('<a>').text(similar.title);
+
+            if( similar.mid ) {
+                elmTitle.attr('href','?q=' + similar.title);
+                elmSimilarMovie.addClass('clickable');
+            }
+
+            elmSimilarMovie.append(elmTitle);
+
+            elmSimilar.append(elmSimilarMovie);
+        });
+
+
+
         var elm = $('<div>').addClass('movie clearfix').attr('mid',movie.id)
         .append(elmImage)
         .append(elmTitle)
@@ -234,8 +252,6 @@ function search(term,sort,movies) {
 
     $('.loader').hide();
     $('#list').show();
-
-    addSimilarMovieTags();
 
     var n = results.length;
     if( n == 0 ) {
