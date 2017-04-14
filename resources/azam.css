@@ -45,6 +45,19 @@ body {
     overflow: hidden;;
 }
 
+.movie .movie-similars {
+    margin: 16px;
+}
+
+.movie .movie-similars .movie-similar {
+    display: inline-block;
+    font-size: 13px;
+    background: #eee;
+    margin: 2px;
+    padding: 8px;
+    border-radius: 4px;
+}
+
 .clearfix::after {
     content: " ";
     display: block;

@@ -10,6 +10,22 @@ var idx = lunr(function () {
     this.field('year')
 })
 
+var similars = [];
+
+Array.prototype.flatMap = function(lambda) { 
+    return Array.prototype.concat.apply([], this.map(lambda)); 
+};
+
+function getSimilarMovieTo(movieID) {
+
+    $.get('https://api.themoviedb.org/3/movie/' + movieID + '/similar?api_key=3304aafd7690a315c7faddd3b6b4ba0e&language=en-US&page=1', function(res) {
+
+        similars.push({'id': movieID, 'similar': res});
+
+    })
+
+}
+
 $(function() {
 
     var query = queryStringToJSON().q;
@@ -21,8 +37,24 @@ $(function() {
         movies = prepare(res);
         searchDidRequest();
 
+
+        // movies.forEach( function(movie, idx) {
+
+        //     console.log(idx * 250);
+
+        //     setTimeout( function() {
+        //         getSimilarMovieTo(movie.id);
+        //     }, 250 * idx)
+
+        // });
     })
 
+
+     $.get( 'similars.json', function(res) {
+        similars = res;
+
+        addSimilarMovieTags();
+     });
 
     ///////// Event Handlers
     $('.search-box').on('keyup', function() {
@@ -40,6 +72,32 @@ $(function() {
 
 function movieIsClicked() {
     $(this).find('.movie-more').toggle();
+}
+
+function addSimilarMovieTags() {
+
+    $('.movie').each( function(idx,elm) {
+
+            var elmMovie = $(elm);
+            var mid = elmMovie.attr('mid');
+
+            var elmSimilarMovies = similars.filter( function(m) {
+                return mid == m.id;
+            }).flatMap( function(m) {
+                return m.similar.results;
+            }).forEach( function(m) {
+
+                //var elmPoster = $('<img>').attr('src', 'https://image.tmdb.org/t/p/w100' + m.poster_path);
+                var elmTitle = $('<div>').text(m.title);
+
+                var elmSimilarMovie = $('<div>').addClass('movie-similar')
+                //                                .append(elmPoster)
+                                                .append(elmTitle);
+
+                elmMovie.find('.movie-similars').append(elmSimilarMovie);
+            });
+
+        });
 }
 
 function searchDidRequest() {
@@ -149,18 +207,20 @@ function search(term,sort,movies) {
         var elmScore = $('<span>').addClass('movie-rate').text(movie.rate);
         var elmGenre = $('<span>').addClass('movie-genre').text(movie.genre);
         var elmPlot = $('<span>').addClass('movie-plot').text(movie.plot);
+        var elmSimilar = $('<div>').addClass('movie-similars');
         var elmMore = $('<div>').addClass('movie-more').html(
             'Director: ' + movie.director + '<br/>' +
             'Actors: ' + movie.actors + '</br>' + 
             '<a target="_blank" href=\"http://www.imdb.com/title/' + movie.id + '/\">Open IMDB</a> ' +
             '<a target="_blank" href=\"' + subtitleLink + '\">Find Subtitle</a>');
 
-        var elm = $('<div>').addClass('movie clearfix')
+        var elm = $('<div>').addClass('movie clearfix').attr('mid',movie.id)
         .append(elmImage)
         .append(elmTitle)
         .append(elmScore)
         .append(elmGenre)
         .append(elmPlot)
+        .append(elmSimilar)
         .append(elmMore);
 
         elm.click(movieIsClicked);
@@ -174,6 +234,8 @@ function search(term,sort,movies) {
 
     $('.loader').hide();
     $('#list').show();
+
+    addSimilarMovieTags();
 
     var n = results.length;
     if( n == 0 ) {
