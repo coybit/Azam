@@ -147,7 +147,7 @@ function search(term,sort,movies) {
         var elmScore = $('<span>').addClass('movie-rate').text(movie.rate);
         var elmGenre = $('<span>').addClass('movie-genre').text(movie.genre);
         var elmPlot = $('<span>').addClass('movie-plot').text(movie.plot);
-        var elmMore = $('<div>').addClass('movie-more').html('Director: ' + movie.director + '<br/>Actors: ' + movie.actors + '</br><a href=\"' + subtitleLink + '\">Subtitle</a>');
+        var elmMore = $('<div>').addClass('movie-more').html('Director: ' + movie.director + '<br/>Actors: ' + movie.actors + '</br><a target="_blank" href=\"' + subtitleLink + '\">Subtitle</a>');
 
         var elm = $('<div>').addClass('movie clearfix')
         .append(elmImage)
@@ -158,6 +158,9 @@ function search(term,sort,movies) {
         .append(elmMore);
 
         elm.click(movieIsClicked);
+        elm.find('a').click( function(event){
+            event.stopPropagation();
+        });
 
         $('#list').append( elm );
 

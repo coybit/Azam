@@ -121,7 +121,7 @@ a {
     cursor: pointer;
 }
 
-a, a:hover, a:visited {
+a, a:hover, a:visited, a:focus {
     color: #999;
     text-decoration: none;
 }
