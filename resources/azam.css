@@ -31,7 +31,7 @@ body {
     margin: 0 10px;
     left: 10px;
     float: right;
-    background: #d8d8d8;
+    background: #e8e8e8;
     padding: 2px 8px;
     border-radius: 4px;
 }
@@ -108,13 +108,17 @@ body {
     display: none;
 }
 
-.movie-more a {
+.movie-more a,
+.movie-more a:visited,
+.movie-more a:hover,
+.movie-more a:focus {
     display: inline-block;
     float: right;
-    background: #822d2d;
-    color: #efefef;
+    background: #fdd0d0;
+    color: #000;
+    box-shadow: 1px 1px 1px #d2d2d2;
     padding: 5px 10px;
-    border-radius: 4px;
+    margin-left: 8px;
 }
 
 a {
@@ -133,6 +137,7 @@ a span {
     text-decoration: none;
     font-size: 14px;
 }
+
 a:hover span {
     display: inline-block;
 }
