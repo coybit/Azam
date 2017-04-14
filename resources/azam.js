@@ -12,7 +12,9 @@ var idx = lunr(function () {
 
 $(function() {
 
-    $('.search-box').focus();
+    var query = queryStringToJSON().q;
+
+    $('.search-box').focus().val(query);
 
     $.get( 'out.json', function(res) {
 
@@ -180,3 +182,27 @@ function search(term,sort,movies) {
         $('.stat').text( results.length + ' movies are found' );
     }
 }
+
+function queryStringToJSON(qs) {
+    qs = qs || location.search.slice(1);
+
+    var pairs = qs.split('&');
+    var result = {};
+    pairs.forEach(function(pair) {
+        var pair = pair.split('=');
+        var key = pair[0];
+        var value = decodeURIComponent(pair[1] || '');
+
+        if( result[key] ) {
+            if( Object.prototype.toString.call( result[key] ) === '[object Array]' ) {
+                result[key].push( value );
+            } else {
+                result[key] = [ result[key], value ];
+            }
+        } else {
+            result[key] = value;
+        }
+    });
+
+    return JSON.parse(JSON.stringify(result));
+};
