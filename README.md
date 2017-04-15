@@ -6,5 +6,6 @@ Search through your movies list.
 https://coybit.github.io/Azam/
 
 ## ToDo
-[ ] - Increase speed
-[ ] - Make it more dynamic
+- [X] Show similar movies
+- [ ] Increase speed
+- [ ] Make it more dynamic
