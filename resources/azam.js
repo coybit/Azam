@@ -198,7 +198,7 @@ function search(term,sort,movies) {
         })
     }
 
-    results.forEach( function(movie) {
+    results.forEach( function(movie, idx) {
 
         var subtitleLink = 'https://subscene.com/subtitles/title?q=' + movie.title
 
@@ -214,23 +214,26 @@ function search(term,sort,movies) {
             '<a target="_blank" href=\"http://www.imdb.com/title/' + movie.id + '/\">Open IMDB</a> ' +
             '<a target="_blank" href=\"' + subtitleLink + '\">Find Subtitle</a>');
 
-        // Similar Movies
-        movie.similars.forEach( function(similar) {
-            
-            var elmSimilarMovie = $('<div>').addClass('movie-similar');
-            var elmTitle = $('<a>').text(similar.title);
+        setTimeout( function() {
+            console.log(movie.title);
 
-            if( similar.mid ) {
-                elmTitle.attr('href','?q=' + similar.title);
-                elmSimilarMovie.addClass('clickable');
-            }
+            //Similar Movies
+            movie.similars.forEach( function(similar) {
+                
+                var elmSimilarMovie = $('<div>').addClass('movie-similar');
+                var elmTitle = $('<a>').text(similar.title);
 
-            elmSimilarMovie.append(elmTitle);
+                if( similar.mid ) {
+                    elmTitle.attr('href','?q=' + similar.title);
+                    elmSimilarMovie.addClass('clickable');
+                }
 
-            elmSimilar.append(elmSimilarMovie);
-        });
+                elmSimilarMovie.append(elmTitle);
 
+                elmSimilar.append(elmSimilarMovie);
+            });
 
+        }, 100+10*idx);
 
         var elm = $('<div>').addClass('movie clearfix').attr('mid',movie.id)
         .append(elmImage)
