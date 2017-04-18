@@ -9,3 +9,24 @@ https://coybit.github.io/Azam/
 - [X] Show similar movies
 - [ ] Increase speed
 - [ ] Make it more dynamic
+
+## Sample Query
+
+
+`2016`
+
+`2015 Drama`
+
+`Tom Hanks Comedy`
+
+`Paris`
+
+`Mozart`
+
+`David Fincher`
+
+`Al Pacino Christopher Nolan`
+
+`World War Comedy`
+
+`Blind Al Pacino`
