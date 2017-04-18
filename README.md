@@ -10,7 +10,7 @@ https://coybit.github.io/Azam/
 - [ ] Increase speed
 - [ ] Make it more dynamic
 
-## Sample Query
+## Sample Queries
 
 
 `2016`
