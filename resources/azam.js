@@ -32,10 +32,10 @@ $(function() {
 
     $('.search-box').focus().val(query);
 
-    $.get( 'out.json', function(resMovies) {
+    $.get( 'data/out.json', function(resMovies) {
 
         
-         $.get( 'similars.json', function(resSimilars) {
+         $.get( 'data/similars.json', function(resSimilars) {
 
             movies = prepare(resMovies);
             prepareSimilarMovieTags(resSimilars);
