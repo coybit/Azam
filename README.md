@@ -1,5 +1,7 @@
 # Azam
 
+<img src="shots/01.png" width="500"/>
+
 Search through your movies list.
 
 ## Demo
