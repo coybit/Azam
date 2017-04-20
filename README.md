@@ -8,9 +8,10 @@ Search through your movies list.
 https://coybit.github.io/Azam/
 
 ## ToDo
-- [X] Show similar movies
-- [ ] Increase speed
-- [ ] Make it more dynamic
+- [X] Showing similar movies
+- [ ] Increasing speed
+- [ ] Making data sources more dynamic
+- [ ] Adding movies trailer
 
 ## Sample Queries
 
