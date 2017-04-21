@@ -2,7 +2,7 @@
 var movies = [];
 var similars = [];
 var idx = lunr(function () {
-    this.field('title', { boost: 10 })
+    this.field('title', { boost: 1000 })
     this.field('plot')
     this.field('genre')
     this.field('actors')
@@ -99,18 +99,18 @@ function prepareSimilarMovieTags(rawList) {
         movie['similars'] = similarMovies || [];
 
         var similarsTitle = similarMovies.map( function(similar) {  return similar.title });
-        
-        var doc = {
-            "title": movie.title,
-            "plot": movie.plot,
-            "director": movie.director,
-            "genre": movie.genre,
-            "actors": movie.actors,
-            "year": movie.year,
-            "id": movie.id,
-            "similars": similarsTitle.join(',')
-        }
-        idx.add(doc);
+
+        // var doc = {
+        //     "title": movie.title,
+        //     "plot": movie.plot,
+        //     "director": movie.director,
+        //     "genre": movie.genre,
+        //     "actors": movie.actors,
+        //     "year": movie.year,
+        //     "id": movie.id,
+        //     "similars": similarsTitle.join(',')
+        // }
+        // idx.add(doc);
 
     });
 }
@@ -160,7 +160,7 @@ function prepare(rawList) {
 
     list.forEach( function(item,index) {
 
-/*
+
         var doc = {
             "title": item.title,
             "plot": item.plot,
@@ -171,7 +171,7 @@ function prepare(rawList) {
             "id": item.id
         }
         idx.add(doc);
-*/
+
     });
 
     return list;
@@ -282,6 +282,12 @@ function search(term,sort,movies) {
     else {
         $('.stat').text( results.length + ' movies are found' );
     }
+
+    $(".movie").unmark({
+      done: function() {
+        $(".movie").mark(term);
+      }
+    });
 }
 
 function queryStringToJSON(qs) {

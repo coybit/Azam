@@ -219,3 +219,7 @@ a:hover span {
         height: 5em;
     }
 }
+
+mark {
+    background-color: #ffeb82;
+}
