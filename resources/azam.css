@@ -56,10 +56,12 @@ body {
     margin: 2px;
     padding: 8px;
     border-radius: 4px;
+    color: #c7c7c7;
 }
 
-.movie .movie-similars .clickable {
-    background: #333;
+.movie .movie-similars .clickable a {
+    color: #464646;
+    font-weight: 500;
 }
 
 .clearfix::after {
