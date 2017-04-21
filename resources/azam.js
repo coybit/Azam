@@ -1,6 +1,6 @@
 
 var movies = [];
-
+var similars = [];
 var idx = lunr(function () {
     this.field('title', { boost: 10 })
     this.field('plot')
@@ -8,9 +8,10 @@ var idx = lunr(function () {
     this.field('actors')
     this.field('director')
     this.field('year')
+    this.field('similars')
 })
 
-var similars = [];
+
 
 Array.prototype.flatMap = function(lambda) { 
     return Array.prototype.concat.apply([], this.map(lambda)); 
@@ -97,6 +98,20 @@ function prepareSimilarMovieTags(rawList) {
 
         movie['similars'] = similarMovies || [];
 
+        var similarsTitle = similarMovies.map( function(similar) {  return similar.title });
+        
+        var doc = {
+            "title": movie.title,
+            "plot": movie.plot,
+            "director": movie.director,
+            "genre": movie.genre,
+            "actors": movie.actors,
+            "year": movie.year,
+            "id": movie.id,
+            "similars": similarsTitle.join(',')
+        }
+        idx.add(doc);
+
     });
 }
 
@@ -145,6 +160,7 @@ function prepare(rawList) {
 
     list.forEach( function(item,index) {
 
+/*
         var doc = {
             "title": item.title,
             "plot": item.plot,
@@ -155,7 +171,7 @@ function prepare(rawList) {
             "id": item.id
         }
         idx.add(doc);
-
+*/
     });
 
     return list;
