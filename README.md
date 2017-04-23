@@ -12,6 +12,7 @@ https://coybit.github.io/Azam/
 - [ ] Increasing speed
 - [ ] Making data sources more dynamic
 - [ ] Adding movies trailer
+- [ ] Adding AutoCorrection
 
 ## Sample Queries
 
