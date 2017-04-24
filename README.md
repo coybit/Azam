@@ -1,7 +1,7 @@
 # Azam
-<div style="text-align=center">
+<p align="center">
   <img src="shots/01.png" width="700"/>
-</div>
+</p>
 
 Search through your movies list.
 
