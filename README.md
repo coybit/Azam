@@ -15,7 +15,7 @@ https://coybit.github.io/Azam/
 ## ToDo
 - [X] Showing similar movies
 - [ ] Increasing speed
-- [ ] Making data sources more dynamic
+- [ ] Fetching data directly from Naser
 - [ ] Adding movies trailer
 - [ ] Adding AutoCorrection
 
