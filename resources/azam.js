@@ -10,6 +10,7 @@ var idx = lunr(function () {
     this.field('year')
     this.field('similars')
 })
+var changeQueryTimeout;
 
 
 
@@ -58,7 +59,14 @@ $(function() {
 
     ///////// Event Handlers
     $('.search-box').on('keyup', function() {
-        searchDidRequest();
+
+        if( changeQueryTimeout ) {
+            clearTimeout( changeQueryTimeout );
+            changeQueryTimeout = null;
+        }
+
+        changeQueryTimeout = setTimeout( searchDidRequest, 500 );
+
     });
 
     $('.sort-label').click( function() {
@@ -116,10 +124,15 @@ function prepareSimilarMovieTags(rawList) {
 }
 
 function searchDidRequest() {
+
     var term = $('.search-box').val().toLowerCase();
     var sort = $('.sort-label').hasClass('active');
 
     ga('send', 'event', 'search', term, sort);
+
+    if( term.length <= 2 ) {
+        term = ''
+    }
 
     setTimeout( function() {
         search(term, sort, movies)
@@ -231,8 +244,6 @@ function search(term,sort,movies) {
             '<a target="_blank" href=\"' + subtitleLink + '\">Find Subtitle</a>');
 
         setTimeout( function() {
-            console.log(movie.title);
-
             //Similar Movies
             movie.similars.forEach( function(similar) {
                 
